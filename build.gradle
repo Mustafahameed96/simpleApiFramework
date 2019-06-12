@@ -1,0 +1,43 @@
+group 'awienid'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+//    maven { url 'http://repo1.maven.org/maven2' }
+}
+
+dependencies {
+    compile "org.testng:testng:5.14.10"
+
+    compile 'io.rest-assured:rest-assured:3.3.0'
+//    compile 'io.rest-assured:json-path:3.3.0'
+//    compile 'io.rest-assured:xml-path:3.3.0'
+//    testCompile 'io.rest-assured:json-schema-validator:3.3.0'
+
+    compile 'com.relevantcodes:extentreports:2.41.2'
+    compile 'com.aventstack:extentreports:4.0.9'
+
+    compile files('libs/ojdbc7.jar');
+    compile 'mysql:mysql-connector-java:5.1.6' //For MySQL DB Connection
+}
+
+test {
+    useTestNG()
+//    include '**module.Validations/*'
+}
+
+task executeAllTests(type: Exec) {
+    commandLine "gradle", "test"
+}
+
+task executeFlows(type: Exec) {
+    commandLine "gradle", "test", "--tests", "module.Flow.*"
+}
+
+task executeValidations(type: Exec) {
+    commandLine "gradle", "test", "--tests", "module.Validations.*"
+}
+
